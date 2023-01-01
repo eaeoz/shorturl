@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.defaulttags import csrf_token
 import uuid
 from .models import Urls
 from django.http import HttpResponse
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html',{})
 
 
 def create(request):
@@ -18,5 +19,5 @@ def create(request):
 
 
 def search(request, pk):
-    url_Details = Urls.objects.get(uuid=pk)
+    url_Details = get_object_or_404(Urls, uuid=pk)
     return redirect('https://'+url_Details.link)
